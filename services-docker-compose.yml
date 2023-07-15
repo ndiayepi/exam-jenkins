@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  movie_service:
+    image: ${DOCKER_ID}/${DOCKER_IMAGE}:${DOCKER_TAG}
+    container_name: movie_service
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    networks:
+      - my_network
+    volumes:
+      - ./movie-service/:/app/
+    ports:
+      - 8001:8000
+    environment:
+      - DATABASE_URI=postgresql://movie_db_username:movie_db_password@movie_db/movie_db_dev
+      - CAST_SERVICE_HOST_URL=http://cast_service:8000/api/v1/casts/
+
+  cast_service:
+    image: ${DOCKER_ID}/${DOCKER_IMAGE2}:${DOCKER_TAG}
+    container_name: cast_service
+    networks:
+      - my_network
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./cast-service/:/app/
+    ports:
+      - 8002:8000
+    environment:
+      - DATABASE_URI=postgresql://cast_db_username:cast_db_password@cast_db/cast_db_dev
+networks:
+  my_network:
+    external: true

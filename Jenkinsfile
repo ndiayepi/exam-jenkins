@@ -12,6 +12,7 @@ stages {
                 script {
                 sh '''
                  sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+                 
                  sleep 3
                 '''
                 }
@@ -34,9 +35,9 @@ stages {
                 steps {
                     script {
                     sh '''
-                    docker run -d -p 8001:8000 --name cast-service $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG
+                    docker-compose -f db-docker-compose.yml up -d
                     sleep 10
-                    docker run -d -p 8002:8000 --name movie-service $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG
+                    docker-compose -f services-docker-compose.yml up -d
                     sleep 10
                     '''
                     }
@@ -47,9 +48,12 @@ stages {
             steps {
                     script {
                     sh '''
-                    curl localhost:8001
+                    curl  -X GET -i http://localhost:8002/api/v1/casts/docs
                     sleep 5
-                    curl localhost:8002
+                    curl  -X GET -i http://localhost:8001/api/v1/movies/docs
+                    sleep3
+                    docker-compose -f services-docker-compose.yml stop
+                    docker-compose -f db-docker-compose.yml stop
                     '''
                     }
             }
