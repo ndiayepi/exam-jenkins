@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Fait un nettoyage de containers orphelins
 CONTAINER=$1
  
 RUNNING=$(docker inspect --format="{{ .State.Running }}" $CONTAINER 2> /dev/null)
