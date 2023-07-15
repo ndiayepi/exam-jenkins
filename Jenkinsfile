@@ -23,8 +23,8 @@ stages {
                 sh '''
                  ./remove_container_if_exists.sh cast-service
                  ./remove_container_if_exists.sh movie-service
-                 docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG .
-                 docker build -t $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG .
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG cast-service
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG movie-service
                 sleep 6
                 '''
                 }
