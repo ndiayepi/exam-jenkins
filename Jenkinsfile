@@ -90,7 +90,7 @@ stage('Deploiement en dev'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp cast-service/values.yaml values.yml
+                cp microservices/values.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install app microservices --values=values.yml --namespace dev
@@ -111,7 +111,7 @@ stage('Deploiement en staging'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp cast-service/values.yaml values.yml
+                cp microservices/values.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install app microservices --values=values.yml --namespace staging
@@ -132,7 +132,7 @@ stage('Deploiement en QA'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp cast-service/values.yaml values.yml
+                cp microservices/values.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install app microservices --values=values.yml --namespace qa
@@ -159,7 +159,7 @@ stage('Deploiement en QA'){
                 mkdir .kube
                 ls
                 cat $KUBECONFIG > .kube/config
-                cp cast-service/values.yaml values.yml
+                cp microservices/values.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install app microservices --values=values.yml --namespace prod
