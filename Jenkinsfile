@@ -21,8 +21,8 @@ stages {
             steps {
                 script {
                 sh '''
-                 docker rm -f cast-service
-                 docker rm -f movie-service
+                 ./remove_container_if_exists.sh cast-service
+                 ./remove_container_if_exists.sh movie-service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG .
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG .
                 sleep 6
