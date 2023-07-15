@@ -14,7 +14,7 @@ services:
 
   cast_db:
     image: postgres:12.1-alpine
-    container_name: movcastie-db
+    container_name: cast-db
     networks:
       - my_network
     volumes:

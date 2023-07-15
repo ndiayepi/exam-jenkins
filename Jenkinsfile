@@ -12,7 +12,7 @@ stages {
                 script {
                 sh '''
                  sudo chmod 644 /etc/rancher/k3s/k3s.yaml
-                 
+
                  sleep 3
                 '''
                 }
@@ -22,8 +22,10 @@ stages {
             steps {
                 script {
                 sh '''
-                 ./remove_container_if_exists.sh cast-service
-                 ./remove_container_if_exists.sh movie-service
+                 ./remove_container_if_exists.sh movie_service
+                 ./remove_container_if_exists.sh cast_service
+                 ./remove_container_if_exists.sh movie-db
+                 ./remove_container_if_exists.sh cast-db
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG cast-service
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG movie-service
                 sleep 6
@@ -50,8 +52,6 @@ stages {
                     sh '''
                     curl  -X GET -i http://localhost:8002/api/v1/casts/docs
                     sleep 5
-                    curl  -X GET -i http://localhost:8001/api/v1/movies/docs
-                    sleep3
                     docker-compose -f services-docker-compose.yml stop
                     docker-compose -f db-docker-compose.yml stop
                     '''
