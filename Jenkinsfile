@@ -131,7 +131,7 @@ stage('Deploiement en QA'){
                 cp cast-service/values.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                helm upgrade --install app microservices --values=values.yml --namespace QA
+                helm upgrade --install app microservices --values=values.yml --namespace qa
                 '''
                 }
             }
